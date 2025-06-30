@@ -1,28 +1,35 @@
-#include <stdio.h>
-#include "freertos/FreeRTOS.h"
-#include "freertos/task.h"
-#include "driver/gpio.h"
+# ESP32 Two LEDs Blink using ESP-IDF
 
-#define LED1_GPIO GPIO_NUM_2
-#define LED2_GPIO GPIO_NUM_4
+This project demonstrates how to blink two LEDs **alternately** using an ESP32 development board and the **ESP-IDF framework**.
 
-void app_main(void) {
-    // Configure GPIOs
-    gpio_reset_pin(LED1_GPIO);
-    gpio_set_direction(LED1_GPIO, GPIO_MODE_OUTPUT);
+## 🔧 Requirements
 
-    gpio_reset_pin(LED2_GPIO);
-    gpio_set_direction(LED2_GPIO, GPIO_MODE_OUTPUT);
+- ESP32 board (e.g., DevKit v1)
+- Two LEDs
+- Two resistors (220Ω recommended)
+- Breadboard and jumper wires
+- [ESP-IDF](https://docs.espressif.com/projects/esp-idf/en/latest/esp32/get-started/) v5.x installed
 
-    while (1) {
-        // Turn on LED1, off LED2
-        gpio_set_level(LED1_GPIO, 1);
-        gpio_set_level(LED2_GPIO, 0);
-        vTaskDelay(500 / portTICK_PERIOD_MS);
+## ⚙️ Connections
 
-        // Turn off LED1, on LED2
-        gpio_set_level(LED1_GPIO, 0);
-        gpio_set_level(LED2_GPIO, 1);
-        vTaskDelay(500 / portTICK_PERIOD_MS);
-    }
-}
+| LED | ESP32 GPIO |
+|-----|------------|
+| LED1 | GPIO2     |
+| LED2 | GPIO4     |
+
+> Connect resistors in series with LEDs to avoid damage.
+
+## 🧠 Code Overview
+
+- GPIO2 and GPIO4 are configured as output pins
+- LEDs are toggled every 500ms
+- The logic alternates the ON/OFF state between both LEDs
+
+## 📂 Project Structure
+Two_led_blink/
+├── main/
+│ ├── blink.c // Main application file
+│ └── CMakeLists.txt // Source CMake file
+├── CMakeLists.txt // Root CMake file
+├── .gitignore // Ignored build files
+└── README.md // Project details
